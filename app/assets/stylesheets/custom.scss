@@ -44,7 +44,10 @@ textarea {
   float: left;
   margin-right: 10px; font-size: 1.7em;
   color: $gray-light;
-  text-transform: uppercase; letter-spacing: -1px; padding-top: 9px; font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
 
   &:hover {
     color: $gray-light;
@@ -58,9 +61,9 @@ footer {
   color: $gray-light;
 
   a {
-    color: #555;
+    color: $gray;
     &:hover {
-      color: #222;
+      color: $gray-darker;
     }
   }
   small {
