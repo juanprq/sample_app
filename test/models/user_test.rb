@@ -58,4 +58,11 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not duplicated_user.valid?
   end
+
+  test 'email should be downcased' do
+    @user.email = 'eXamPle@BaR.CoM'
+    @user.save
+
+    assert_equal @user.email, 'example@bar.com'
+  end
 end
