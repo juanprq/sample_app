@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       flash[:success] = 'Welcome to sample app'
       redirect_to users_show_path(user)
     else
-      flash[:danger] = 'Invalid credentials, please try again!'
+      flash.now[:danger] = 'Invalid email/password combination'
       render 'new'
     end
   end
