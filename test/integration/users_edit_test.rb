@@ -35,4 +35,15 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_equal email, @user.email
   end
 
+  test 'friendly redirect should only work once' do
+    get edit_user_path(@user)
+    assert_redirected_to login_path
+
+    log_in_as(@user)
+    assert_redirected_to edit_user_path(@user)
+
+    log_in_as(@user)
+    assert_redirected_to @user
+  end
+
 end
