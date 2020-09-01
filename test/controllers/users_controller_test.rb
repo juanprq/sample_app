@@ -56,16 +56,31 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update admin column' do
-    log_in_as(@user)
-    assert_not @user.admin?
+    log_in_as(@other_user)
+    assert_not @other_user.admin?
 
-    patch user_path(@user), params: {
+    patch user_path(@other_user), params: {
       user: { name: 'new name', email: 'new@email.com', admin: true }
     }
-    assert_redirected_to user_path(@user)
+    assert_redirected_to user_path(@other_user)
     assert_not flash.empty?
 
-    @user.reload
-    assert_not @user.admin?
+    @other_user.reload
+    assert_not @other_user.admin?
+  end
+
+  test 'should redirect destroy when not logged in' do
+    assert_no_difference 'User.count' do
+      delete user_path(@other_user)
+    end
+    assert_redirected_to login_path
+  end
+
+  test 'should redirect destroy when logged-in as a non-admin' do
+    log_in_as(@other_user)
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    assert_redirected_to root_path
   end
 end
