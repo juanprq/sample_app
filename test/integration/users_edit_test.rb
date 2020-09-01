@@ -45,5 +45,4 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     assert_redirected_to @user
   end
-
 end
