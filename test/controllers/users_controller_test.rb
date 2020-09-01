@@ -54,4 +54,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get users_path
     assert_redirected_to login_url
   end
+
+  test 'should not update admin column' do
+    log_in_as(@user)
+    assert_not @user.admin?
+
+    patch user_path(@user), params: {
+      user: { name: 'new name', email: 'new@email.com', admin: true }
+    }
+    assert_redirected_to user_path(@user)
+    assert_not flash.empty?
+
+    @user.reload
+    assert_not @user.admin?
+  end
 end
