@@ -58,4 +58,17 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_redirected_to user
   end
+
+  test 'expired link' do
+    post password_resets_path(params: { password_reset: { email: @user.email } })
+    assert_not_equal @user.reset_digest, @user.reload.reset_digest
+
+    user = assigns(:user)
+    user.update_attribute(:reset_sent_at, 3.hours.ago)
+    get edit_password_reset_path(user.reset_token, email: user.email)
+    assert_not flash[:empty]
+    assert_redirected_to new_password_reset_path
+    follow_redirect!
+    assert_match /expired/i, response.body
+  end
 end
