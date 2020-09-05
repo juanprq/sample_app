@@ -6,10 +6,10 @@
     <%= form_with(model: @user, local: true, url: password_reset_path(params[:id])) do |f| %>
       <%= render 'shared/error_messages' %>
 
-      <%= f.hidden_field_tag :email %>
+      <%= f.hidden_field :email %>
 
       <%= f.label :password %>
-      <%= f.password_field :password, class: 'control-form' %>
+      <%= f.password_field :password, class: 'form-control' %>
 
       <%= f.label :password_confirmation, 'Cofirmation' %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
