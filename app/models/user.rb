@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :active_relationships, class_name: 'Relationship',
     foreign_key: 'follower_id',
     dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
 
   attr_accessor :remember_token, :activation_token, :reset_token
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -60,6 +61,18 @@ class User < ApplicationRecord
 
   def User.new_token
     SecureRandom.urlsafe_base64
+  end
+
+  def follow(user)
+    following.push(user)
+  end
+
+  def unfollow(user)
+    following.delete(user)
+  end
+
+  def following?(user)
+    following.include?(user)
   end
 
   private
