@@ -79,6 +79,10 @@ class User < ApplicationRecord
     following.include?(user)
   end
 
+  def feed
+    Micropost.where('user_id IN (?) OR user_id = ?', following_ids, id)
+  end
+
   private
 
   def create_activation_digest
