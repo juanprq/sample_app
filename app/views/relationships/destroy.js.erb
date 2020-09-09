@@ -1,0 +1,5 @@
+const followFormHtml = '<%= escape_javascript(render('users/follow')) %>';
+const followersHtml = '<%= @user.followers.count %>';
+
+$('#follow_form').html(followFormHtml);
+$('#followers').html(followersHtml);
